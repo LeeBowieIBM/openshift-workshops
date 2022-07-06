@@ -87,7 +87,7 @@ oc get routes
 ```
 
 # Test it
-# Add some pods
+Open the URL in a browser or click the link in topology view
 # Shut down Openshift
 ```
 crc stop
