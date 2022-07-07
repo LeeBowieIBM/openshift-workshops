@@ -16,7 +16,8 @@ If you computer has less than 10GB RAM, or have less than 40GB of disk space, cr
 ```
 https://developers.redhat.com/developer-sandbox/get-started
 ```
-## Install CRC	
+## Uncompress CRC somewhere
+## Setup CRC
  ```
  crc setup
 ```
