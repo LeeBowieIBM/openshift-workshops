@@ -29,8 +29,13 @@ You can do it from the WebUi like this
 
 # Create a Wordpress db for Wordpress
 Go into the terminal for the mariadb pod
-```
-mysql -u root
+
+Developer > Topology > mariadb > Pods > Select running pod > Terminal
+
+```mysql -u root```
+```sql
+show databases;
+select user from mysql.user;
 create database wordpress
 ```
 
