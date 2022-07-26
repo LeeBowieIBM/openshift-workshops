@@ -2,9 +2,11 @@
 ## Spin up a free OpenShift instance
 https://developers.redhat.com/developer-sandbox/get-started
 
+NOTE: The free Openshift cluster from Red Hat Developer has many limitations! You only get one pre-defined project. It will aggressively shut down pods to save resources, etc. On the up side it comes with a bunch of installed goodies that typically you would have to add-on, like a terminal! I love me some terminal.
+
 ## Go into the instance WebUi
 Your URL will look like this
-https://console-openshift-console.apps.sandbox-m2.ll9k.p1.openshiftapps.com/topology/ns/guitargodlee-dev?view=graph
+https://console-openshift-console.apps.sandbox-m2.ll9k.p1.openshiftapps.com/topology/ns/<YOUR USER ID>-dev?view=graph
 
 Take a look around!
 
@@ -25,7 +27,9 @@ oc status
  oc new-app mariadb
 ```
 
-You can do it from the WebUi like this
+NOTE: We're not doing the -ephemeral version on mariadb that we used in the first workshop.
+ 
+You can also do it from the WebUi like by right clicking in Topology > Add to Project
 
 # Create a Wordpress db for Wordpress
 Go into the terminal for the mariadb pod
