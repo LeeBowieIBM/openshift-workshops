@@ -1,11 +1,19 @@
 # Monitoring Openshift
 ## Setup CRC
+Monitoring is not enabled by default on CRC!!
+
 Do all the steps in workshop1-intro EXCEPT apply the following commands before you do a ```crc start```
 ```
 crc config set memory 16384
 crc config set enable-cluster-monitoring true
 ```
-Monitoring is not enabled by default on CRC
+
+More guidence here
+
+https://crc.dev/crc/#starting-monitoring_gsg
+
+https://crc.dev/crc/#configuring-the-instance_gsg
+
 ## Check your the app as kubeadmin
 ### Let's check out some metrics as an administrator
 
@@ -36,3 +44,21 @@ Test it!
 Go into Slack and see if it worked.
 
 ## Create an alert as a developer for your app
+
+
+
+## References
+Red Hat Docs
+
+https://docs.openshift.com/container-platform/4.10/monitoring/monitoring-overview.html
+
+https://docs.openshift.com/container-platform/4.10/monitoring/managing-alerts.html#managing-alerts
+
+Excellent Blog on Monitoring in Openshift https://www.opensourcerers.org/2022/02/14/enabling-monitoring-scaling-alerting/
+
+Good CRC Deepdive Blog https://alesnosek.com/blog/2021/02/28/deep-dive-into-codeready-containers-deployment-on-linux/
+
+### Links to my supporting files
+https://docs.google.com/presentation/d/1wuBeP0Wqyj4a3VlCXh7ddOJ5F991J_XKuwrn-QbYDlM/edit?usp=sharing
+https://docs.google.com/document/d/1OwHoXV_9H78b_4KSmQ07VHdkyPVzBtne06LQZhwz8-U/edit?usp=sharing
+
