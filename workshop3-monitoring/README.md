@@ -44,8 +44,95 @@ Test it!
 Go into Slack and see if it worked.
 
 ## Create an alert as a developer for your app
+### Enable user workload monitoring
+```yaml
+$ cat <<EOF | oc apply -f -
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-monitoring-config
+  namespace: openshift-monitoring
+data:
+  config.yaml: |
+    enableUserWorkload: true
+EOF
+```
 
+Check to see if it's going 
+```oc get pod -n openshift-user-workload-monitoring```
 
+Add required bindings
+```oc policy add-role-to-user monitoring-edit developer -n wordpress-project```
+also do it for ```monitoring-rules-edit``` and ```monitoring-rules-view```
+
+Assign roles
+```oc -n wordpress-project adm policy add-role-to-user alert-routing-edit developer```
+
+Create the alert template
+```oc -n openshift-monitoring get secret alertmanager-main --template='{{ index .data "alertmanager.yaml" }}' | base64 --decode > alertmanager.yaml```
+
+Update altertmanager.yaml to look like this
+```yaml
+global:
+  resolve_timeout: 5m
+  slack_api_url: >-
+    https://hooks.slack.com/services/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
+inhibit_rules:
+  - equal:
+      - namespace
+      - alertname
+    source_matchers:
+      - severity = critical
+    target_matchers:
+      - severity =~ warning|info
+  - equal:
+      - namespace
+      - alertname
+    source_matchers:
+      - severity = warning
+    target_matchers:
+      - severity = info
+receivers:
+  - name: Slack - Project Alerts
+    slack_configs:
+      - channel: alerts
+  - name: Watchdog
+  - name: Critical
+route:
+  group_by:
+    - namespace
+  group_interval: 5m
+  group_wait: 30s
+  receiver: Slack - Project Alerts
+  repeat_interval: 12h
+  routes:
+    - matchers:
+        - alertname = Watchdog
+      receiver: Watchdog
+    - matchers:
+        - severity = critical
+      receiver: Critical
+    - match:
+        service: wordpress
+  ```
+  
+  
+  Apply the alert with a 
+  ```
+  oc -n openshift-monitoring create secret generic alertmanager-main --from-file=alertmanager.yaml --dry-run=client -o=yaml |  oc -n openshift-monitoring replace secret --filename=-
+  ```
+  
+Get the URL to your app
+```
+export URL=$(oc get route wordpress -o jsonpath='{.spec.host}')
+```
+
+Stress test your app with a 
+```
+for i in {1..1000}; do curl $URL/sample-page; sleep 4; done
+```
+
+More details here https://docs.openshift.com/container-platform/4.10/monitoring/enabling-monitoring-for-user-defined-projects.html
 
 ## References
 Red Hat Docs
