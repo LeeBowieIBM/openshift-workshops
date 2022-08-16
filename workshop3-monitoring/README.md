@@ -71,11 +71,11 @@ also do it for ```monitoring-rules-edit``` and ```monitoring-rules-view```
 Assign roles
 ```oc -n wordpress-project adm policy add-role-to-user alert-routing-edit developer```
 
-Alerts for developers and app watchers is not going to fit in our 30 minute workshop. It requires a lot of CLI and yaml to get going and your apps and workspace need to be setup for them before you get them going. If there's enough interest I'll do a workshop specifically on this topic.
 
+**Alerts for developers and app watchers is not going to fit in our 30 minute workshop. It requires a lot of CLI and yaml to get going and your apps and workspace need to be setup for them before you get them going. If there's enough interest I'll do a workshop specifically on this topic.**
 
-I'LL LEAVE THIS HERE SO YOU CAN GET STARTED!
-  
+**I'LL LEAVE THIS HERE SO YOU CAN GET STARTED!**
+
 Get the URL to your app
 ```
 export URL=$(oc get route wordpress -o jsonpath='{.spec.host}')
