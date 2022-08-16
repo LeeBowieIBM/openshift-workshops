@@ -45,6 +45,9 @@ Go into Slack and see if it worked.
 
 ## Create an alert as a developer for your app
 ### Enable user workload monitoring
+
+You need to do this as kubeadmin
+
 ```yaml
 $ cat <<EOF | oc apply -f -
 apiVersion: v1
@@ -61,66 +64,17 @@ EOF
 Check to see if it's going 
 ```oc get pod -n openshift-user-workload-monitoring```
 
-Add required bindings
+Add required bindings to user developer
 ```oc policy add-role-to-user monitoring-edit developer -n wordpress-project```
 also do it for ```monitoring-rules-edit``` and ```monitoring-rules-view```
 
 Assign roles
 ```oc -n wordpress-project adm policy add-role-to-user alert-routing-edit developer```
 
-Create the alert template
-```oc -n openshift-monitoring get secret alertmanager-main --template='{{ index .data "alertmanager.yaml" }}' | base64 --decode > alertmanager.yaml```
+Alerts for developers and app watchers is not going to fit in our 30 minute workshop. It requires a lot of CLI and yaml to get going and your apps and workspace need to be setup for them before you get them going. If there's enough interest I'll do a workshop specifically on this topic.
 
-Update altertmanager.yaml to look like this
-```yaml
-global:
-  resolve_timeout: 5m
-  slack_api_url: >-
-    https://hooks.slack.com/services/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
-inhibit_rules:
-  - equal:
-      - namespace
-      - alertname
-    source_matchers:
-      - severity = critical
-    target_matchers:
-      - severity =~ warning|info
-  - equal:
-      - namespace
-      - alertname
-    source_matchers:
-      - severity = warning
-    target_matchers:
-      - severity = info
-receivers:
-  - name: Slack - Project Alerts
-    slack_configs:
-      - channel: alerts
-  - name: Watchdog
-  - name: Critical
-route:
-  group_by:
-    - namespace
-  group_interval: 5m
-  group_wait: 30s
-  receiver: Slack - Project Alerts
-  repeat_interval: 12h
-  routes:
-    - matchers:
-        - alertname = Watchdog
-      receiver: Watchdog
-    - matchers:
-        - severity = critical
-      receiver: Critical
-    - match:
-        service: wordpress
-  ```
-  
-  
-  Apply the alert with a 
-  ```
-  oc -n openshift-monitoring create secret generic alertmanager-main --from-file=alertmanager.yaml --dry-run=client -o=yaml |  oc -n openshift-monitoring replace secret --filename=-
-  ```
+
+I'LL LEAVE THIS HERE SO YOU CAN GET STARTED!
   
 Get the URL to your app
 ```
