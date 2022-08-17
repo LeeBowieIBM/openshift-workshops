@@ -75,6 +75,7 @@ Assign roles
 **Alerts for developers and app watchers is not going to fit in our 30 minute workshop. It requires a lot of CLI and yaml to get going and your apps and workspace need to be setup for them before you get them going. If there's enough interest I'll do a workshop specifically on this topic.**
 
 **I'LL LEAVE THIS HERE SO YOU CAN GET STARTED!**
+### Do some simple stress testing 
 
 Get the URL to your app
 ```
@@ -101,5 +102,6 @@ Good CRC Deepdive Blog https://alesnosek.com/blog/2021/02/28/deep-dive-into-code
 
 ### Links to my supporting files
 https://docs.google.com/presentation/d/1wuBeP0Wqyj4a3VlCXh7ddOJ5F991J_XKuwrn-QbYDlM/edit?usp=sharing
+
 https://docs.google.com/document/d/1OwHoXV_9H78b_4KSmQ07VHdkyPVzBtne06LQZhwz8-U/edit?usp=sharing
 
